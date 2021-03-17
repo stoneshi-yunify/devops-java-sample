@@ -1,0 +1,30 @@
+pipeline {
+  agent {
+    node {
+      label 'maven'
+    }
+  }
+
+    parameters {
+        string(name:'TAG_NAME',defaultValue: '',description:'')
+    }
+
+    environment {
+        DOCKER_CREDENTIAL_ID = 'stone-dockerhub'
+        GITHUB_CREDENTIAL_ID = 'stone-github'
+        KUBECONFIG_CREDENTIAL_ID = 'stone-kubeconfig'
+        REGISTRY = 'docker.io'
+        DOCKERHUB_NAMESPACE = 'stoneshiyunify'
+        GITHUB_ACCOUNT = 'stoneshi-yunify'
+        APP_NAME = 'devops-java-sample'
+        SONAR_CREDENTIAL_ID = 'sonar-token'
+    }
+
+    stages {
+        stage ('checkout scm') {
+            steps {
+                checkout(scm)
+            }
+        }
+    }
+}
